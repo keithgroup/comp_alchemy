@@ -25,7 +25,7 @@ def pairs(slab, ads, difference_tol=0.3):
     ads : An atoms object from ASE. (ie. A slab model of a catalyst surface with
         an adsorbed molecule.)
 
-    difference_tol (default: 0.3) : Toleranced used when comparing atomic distances.
+    difference_tol (default: 0.3) : Tolerance used when comparing atomic distances.
 
     Returns
     -------
