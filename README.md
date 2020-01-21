@@ -1,4 +1,4 @@
-phystone
+Computational Alchemy
 ==============================
 [//]: # (Badges)
 [![Travis Build Status](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/phystone.svg?branch=master)](https://travis-ci.org/REPLACE_WITH_OWNER_ACCOUNT/phystone)
