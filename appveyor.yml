@@ -38,7 +38,7 @@ install:
 build: false
 
 test_script:
-  - pytest -v --cov=comp_alchemy comp_alchemy\\tests
+  - pytest -v --cov=phystone phystone\\tests
 
 on_success:
   - codecov

@@ -42,7 +42,7 @@ install:
 
 
 script:
-  - pytest -v --cov=comp_alchemy comp_alchemy/tests/
+  - pytest -v --cov=phystone phystone/tests/
 
 notifications:
     email: false

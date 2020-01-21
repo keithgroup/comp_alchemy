@@ -17,13 +17,13 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
 
-import comp_alchemy
+import phystone
 
 
 # -- Project information -----------------------------------------------------
 
 project = 'phystone'
-copyright = ("2019, Chasz Griego. Project structure based on the "
+copyright = ("2020, Chasz Griego. Project structure based on the "
              "Computational Molecular Science Python Cookiecutter version 1.1")
 author = 'Chasz Griego'
 
@@ -117,7 +117,7 @@ html_static_path = ['_static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'comp_alchemydoc'
+htmlhelp_basename = 'phystonedoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -144,8 +144,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'comp_alchemy.tex', 'phystone Documentation',
-     'comp_alchemy', 'manual'),
+    (master_doc, 'phystone.tex', 'phystone Documentation',
+     'phystone', 'manual'),
 ]
 
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'comp_alchemy', 'phystone Documentation',
+    (master_doc, 'phystone', 'phystone Documentation',
      [author], 1)
 ]
 
@@ -165,8 +165,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'comp_alchemy', 'phystone Documentation',
-     author, 'comp_alchemy', 'A Python package for computational alchemy, a tool that allows high-throughput screening of heterogeneous catalysts. ',
+    (master_doc, 'phystone', 'phystone Documentation',
+     author, 'phystone', 'A Python package for computational alchemy, a tool that allows high-throughput screening of heterogeneous catalysts.',
      'Miscellaneous'),
 ]
 

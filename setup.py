@@ -1,6 +1,6 @@
 """
 phystone
-A Python package for computational alchemy, a tool that allows high-throughput screening of heterogeneous catalysts. 
+A Python package for computational alchemy, a tool that allows high-throughput screening of heterogeneous catalysts.
 """
 import sys
 from setuptools import setup, find_packages
@@ -21,7 +21,7 @@ except:
 
 setup(
     # Self-descriptive entries which should always be present
-    name='comp_alchemy',
+    name='phystone',
     author='Chasz Griego',
     author_email='charles.griego18@gmail.com',
     description=short_description[0],
@@ -29,7 +29,7 @@ setup(
     long_description_content_type="text/markdown",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
-    license='BSD-3-Clause',
+    license='MIT',
 
     # Which Python importable modules should be included when your package is installed
     # Handled automatically by setuptools. Use 'exclude' to prevent some specific
