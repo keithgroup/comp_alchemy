@@ -5,6 +5,9 @@ A Python package for computational alchemy, a tool that allows high-throughput s
 
 # Add imports here
 from .binding_energy import *
+from .ads_slab_pairs import *
+from .elec_stat_pot import *
+from .transmutations import *
 
 # Handle versioneer
 from ._version import get_versions
