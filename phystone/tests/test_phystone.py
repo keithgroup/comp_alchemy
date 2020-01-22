@@ -25,6 +25,15 @@ transmuted_slab = transmutations.transmuter(slab, transmute,
 
 symmetric_slab = fcc111('Cu', size=(2, 2, 8), vacuum=10.0, orthogonal=True)
 symmetric_transmute, symmetric_counter = transmutations.index_transmuted(
-    slab,'Cu', 'Cu', 8, 1, symmetric=True)
+    symmetric_slab,'Cu', 'Cu', 8, 1, symmetric=True)
+#view(symmetric_slab)
+print(symmetric_transmute, symmetric_counter)
 
-symmetric_transmute
+center_of_mass = symmetric_slab.get_center_of_mass()
+above_com = []
+below_com = []
+for counter_index in symmetric_counter:
+    if symmetric_slab[counter_index].position[2] > center_of_mass:
+        above_com.append(counter_index)
+    else:
+        below_com.append(counter_index)

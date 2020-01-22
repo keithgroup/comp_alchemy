@@ -66,9 +66,44 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
             transmute.append(int(botmin))
             del transmute_atom[botmin]
 
-        for dex in transmute_atom:
+        center_of_mass = slab.get_center_of_mass()
+        above_com = {}
+        below_com = {}
+        equal_to_com = {}
 
-            counter.append(transmute_atom[dex])
+        for atom_index, atom_position in transmute_atom.values():
+
+            if atom_position > center_of_mass:
+
+                above_com[atom_index] = atom_position
+
+            elif atom_position < center_of_mass:
+
+                below_com[atom_index] = atom_position
+
+            else:
+
+                equal_to_com[atom_index] = atom_position
+
+        if equal_to_com:
+
+            for atom_index in equal_to_com:
+
+                counter.append(int(atom_index))
+
+        else:
+
+            for k in range(0, counter_num):
+
+                topmax = max(above_com, key=above_com.get)
+                counter.append(int(topmax))
+                del above_com[topmax]
+
+            for l in range(0, counter_num):
+
+                botmin = min(below_com, key=below_com.get)
+                counter.append(int(botmin))
+                del below_com[botmin]
 
     else:
 
