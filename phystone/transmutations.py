@@ -104,16 +104,16 @@ def transmuter(slab, atom_index, new_atoms):
 
     Returns
     -------
-    slabcopy : An atoms object from ASE. This is an updated form of slab with all transmutations.
+    slab_copy : An atoms object from ASE. This is an updated form of slab with all transmutations.
     """
 
-    slabcopy = slab.copy()
+    slab_copy = slab.copy()
 
-    for i in enumerate(atom_index):
+    for i,dex in enumerate(atom_index):
 
-        slabcopy[atom_index[i]].symbol = new_atoms[i].symbol
+        slab_copy[dex].symbol = new_atoms[i].symbol
 
-    return slabcopy
+    return slab_copy
 
 def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
 
