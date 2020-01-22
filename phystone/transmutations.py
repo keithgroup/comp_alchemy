@@ -68,7 +68,7 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
         for dex in transmute_atom:
 
-            counter.append(int(dex))
+            counter.append(transmute_atom[dex])
 
     else:
 
