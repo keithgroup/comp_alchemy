@@ -71,7 +71,7 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
         below_com = {}
         equal_to_com = {}
 
-        for atom_index, atom_position in transmute_atom.values():
+        for atom_index, atom_position in transmute_atom.items():
 
             if atom_position > center_of_mass:
 
