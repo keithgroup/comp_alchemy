@@ -28,12 +28,3 @@ symmetric_transmute, symmetric_counter = transmutations.index_transmuted(
     symmetric_slab,'Cu', 'Cu', 8, 1, symmetric=True)
 #view(symmetric_slab)
 print(symmetric_transmute, symmetric_counter)
-
-center_of_mass = symmetric_slab.get_center_of_mass()
-above_com = []
-below_com = []
-for counter_index in symmetric_counter:
-    if symmetric_slab[counter_index].position[2] > center_of_mass:
-        above_com.append(counter_index)
-    else:
-        below_com.append(counter_index)
