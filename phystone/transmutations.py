@@ -95,15 +95,15 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
             for k in range(0, counter_num):
 
-                topmax = max(above_com, key=above_com.get)
-                counter.append(int(topmax))
-                del above_com[topmax]
+                below_max = max(below_com, key=below_com.get)
+                counter.append(int(below_max))
+                del below_com[below_max]
 
             for l in range(0, counter_num):
 
-                botmin = min(below_com, key=below_com.get)
-                counter.append(int(botmin))
-                del below_com[botmin]
+                above_min = min(above_com, key=above_com.get)
+                counter.append(int(above_min))
+                del above_com[above_min]
 
     else:
 
