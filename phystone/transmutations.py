@@ -74,7 +74,7 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
         for atom_index, atom_position in transmute_atom.items():
 
-            if isclose([atom_position],[center_of_mass]):
+            if isclose([atom_position],[center_of_mass[2]]):
 
                 equal_to_com[atom_index] = atom_position
 
