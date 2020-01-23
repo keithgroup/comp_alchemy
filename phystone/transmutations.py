@@ -1,6 +1,7 @@
 """Module for making alchemical transmutations to surface slab models.
 """
 #!/usr/bin/env python
+from numpy import isclose
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
                      transmute_num, counter_num, symmetric=False):
@@ -81,7 +82,7 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
                 below_com[atom_index] = atom_position
 
-            else:
+            elif isclose([atom_position],[center_of_mass]):
 
                 equal_to_com[atom_index] = atom_position
 

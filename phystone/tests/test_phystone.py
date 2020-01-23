@@ -23,8 +23,12 @@ new_atom = Atom('Zn')
 transmuted_slab = transmutations.transmuter(slab, transmute,
                                                      [new_atom]*len(transmute))
 
-symmetric_slab = fcc111('Cu', size=(2, 2, 8), vacuum=10.0, orthogonal=True)
+symmetric_slab = fcc111('Cu', size=(2, 2, 9), vacuum=10.0, orthogonal=True)
 symmetric_transmute, symmetric_counter = transmutations.index_transmuted(
     symmetric_slab,'Cu', 'Cu', 8, 1, symmetric=True)
+print(symmetric_slab.get_center_of_mass())
+print(symmetric_slab[17].position[2])
+from numpy import isclose
+print(isclose([symmetric_slab[17].position[2]],[symmetric_slab.get_center_of_mass()[2]]))
 #view(symmetric_slab)
 print(symmetric_transmute, symmetric_counter)
