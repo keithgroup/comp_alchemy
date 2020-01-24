@@ -88,19 +88,21 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
         if equal_to_com:
 
-            for atom_index in equal_to_com:
+            for k in range(0, counter_num):
 
-                counter.append(int(atom_index))
+                equal_max = max(equal_to_com, key=equal_to_com.get)
+                counter.append(int(equal_max))
+                del equal_to_com[equal_max]
 
         else:
 
-            for k in range(0, counter_num):
+            for l in range(0, counter_num):
 
                 below_max = max(below_com, key=below_com.get)
                 counter.append(int(below_max))
                 del below_com[below_max]
 
-            for l in range(0, counter_num):
+            for m in range(0, counter_num):
 
                 above_min = min(above_com, key=above_com.get)
                 counter.append(int(above_min))
