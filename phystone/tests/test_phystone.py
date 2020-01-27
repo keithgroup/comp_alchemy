@@ -23,8 +23,11 @@ symmetric_slab_odd = fcc111('Cu', size=(2, 2, 9), vacuum=10.0, orthogonal=True)
 #view(symmetric_slab_odd)
 symmetric_slab_even = fcc111('Cu', size=(2, 2, 8), vacuum=10.0, orthogonal=True)
 #view(symmetric_slab_even)
+print(symmetric_slab_even.get_center_of_mass())
 
-new_atom = Atom('Zn')
+new_atom_1 = Atom('Zn')
+
+new_atom_2 = Atom('Ni')
 
 def test_index_transmuted():
 
@@ -64,8 +67,15 @@ def test_index_transmuted_with_symmetric():
 
 def test_transmuter():
 
-    transmuted_slab = phystone.transmutations.transmuter(slab, transmute,
-                                                     [new_atom]*len(transmute))
+    transmute, counter = phystone.transmutations.index_transmuted(slab,
+                                                                  'Cu',
+                                                                  'Cu', 8, 4)
+
+    transmuted_slab = phystone.transmutations.transmuter(slab, [transmute[0],counter[0]],
+                                                     [new_atom_1,new_atom_2])
+
+    assert (transmuted_slab[transmute[0]].number - transmuted_slab[transmute[1]].number == 1 and
+            transmuted_slab[counter[1]].number - transmuted_slab[counter[0]].number == 1)
 
 def test_transmuter_with_symmetric():
 

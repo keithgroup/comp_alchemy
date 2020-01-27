@@ -125,7 +125,7 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
     return transmute, counter
 
-def transmuter(slab, atom_index, new_atoms):
+def transmuter(slab, atom_index, new_atoms, symmetric=False):
     """
     Transmutes atoms in `slab` with indexes given in `atom_index` into new atoms specified
     by an array of ASE atom objects (`new_atoms`).
@@ -140,6 +140,8 @@ def transmuter(slab, atom_index, new_atoms):
     new_atoms : List of ASE atom objects. New atoms that atoms in slab will be transmuted into.
         This list must be equal length to `atom_index.`
 
+    symmetric (default: False): Boolean. Indicates if using a symmetric slab.
+
     Returns
     -------
     slab_copy : An atoms object from ASE. This is an updated form of slab with all transmutations.
@@ -147,9 +149,24 @@ def transmuter(slab, atom_index, new_atoms):
 
     slab_copy = slab.copy()
 
-    for i,dex in enumerate(atom_index):
+    distances = {}
 
-        slab_copy[dex].symbol = new_atoms[i].symbol
+    if symmetric:
+
+        center_of_mass = slab.get_center_of_mass()
+
+        for dex in atom_index:
+
+            distances[dex] = [abs(slab.position[0] - center_of_mass[0]),
+                              abs(slab.position[1] - center_of_mass[1]),
+                              abs(slab.position[2] - center_of_mass[2])]
+
+
+    else:
+
+        for i,dex in enumerate(atom_index):
+
+            slab_copy[dex].symbol = new_atoms[i].symbol
 
     return slab_copy
 
