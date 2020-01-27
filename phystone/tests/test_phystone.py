@@ -79,4 +79,13 @@ def test_transmuter():
 
 def test_transmuter_with_symmetric():
 
-    pass
+    transmute, counter = phystone.transmutations.index_transmuted(symmetric_slab_even,
+                                                                  'Cu',
+                                                                  'Cu', 8, 4, symmetric=True)
+
+    transmuted_symmetric_slab = phystone.transmutations.transmuter(symmetric_slab_even,
+                                                                   [transmute[0],counter[0]],
+                                                                   [new_atom_1,new_atom_2])
+
+    #view(transmuted_symmetric_slab)
+    assert print(transmute)

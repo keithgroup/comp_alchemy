@@ -151,16 +151,29 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
 
     distances = {}
 
+    symmetric_atom_index_pairs = []
+
     if symmetric:
 
         center_of_mass = slab.get_center_of_mass()
 
         for dex in atom_index:
 
-            distances[dex] = [abs(slab.position[0] - center_of_mass[0]),
-                              abs(slab.position[1] - center_of_mass[1]),
-                              abs(slab.position[2] - center_of_mass[2])]
+            distances[dex] = [slab.position[0] - center_of_mass[0],
+                              slab.position[1] - center_of_mass[1],
+                              slab.position[2] - center_of_mass[2]]
 
+        for first_dex, first_distance in distances.values():
+
+            for second_dex, second_distance in distances.values():
+
+                if (isclose([first_distance[0]],[second_distance[0] * -1]) and
+                    isclose([first_distance[1]],[second_distance[1] * -1]) and
+                    isclose([first_distance[2]],[second_distance[2] * -1])):
+
+                    symmetric_atom_index_pairs.append([first_dex, second_dex])
+
+        for i,dex in enumerate(symmetric_atom_index_pairs):
 
     else:
 
