@@ -60,6 +60,10 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
         transmute_bottom = []
 
+        counter_above = []
+
+        counter_below = []
+
         for i in range(0, transmute_num):
 
             topmax = max(transmute_atom, key=transmute_atom.get)
@@ -100,10 +104,6 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
                 del equal_to_com[equal_max]
 
         else:
-
-            counter_below = []
-
-            counter_above = []
 
             for l in range(0, counter_num):
 
