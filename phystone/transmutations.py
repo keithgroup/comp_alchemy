@@ -2,6 +2,7 @@
 """
 #!/usr/bin/env python
 from numpy import isclose
+from .find_pairs import find_symmetric_pairs
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
                      transmute_num, counter_num, symmetric=False):
@@ -55,16 +56,20 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
     if symmetric:
 
+        transmute_top = []
+
+        transmute_bottom = []
+
         for i in range(0, transmute_num):
 
             topmax = max(transmute_atom, key=transmute_atom.get)
-            transmute.append(int(topmax))
+            transmute_top.append(int(topmax))
             del transmute_atom[topmax]
 
         for j in range(0, transmute_num):
 
             botmin = min(transmute_atom, key=transmute_atom.get)
-            transmute.append(int(botmin))
+            transmute_bottom.append(int(botmin))
             del transmute_atom[botmin]
 
         center_of_mass = slab.get_center_of_mass()
@@ -96,17 +101,25 @@ def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
 
         else:
 
+            counter_below = []
+
+            counter_above = []
+
             for l in range(0, counter_num):
 
                 below_max = max(below_com, key=below_com.get)
-                counter.append(int(below_max))
+                counter_below.append(int(below_max))
                 del below_com[below_max]
 
             for m in range(0, counter_num):
 
                 above_min = min(above_com, key=above_com.get)
-                counter.append(int(above_min))
+                counter_above.append(int(above_min))
                 del above_com[above_min]
+
+        transmute = find_symmetric_pairs(slab, transmute_top, transmute_bottom)
+
+        counter = find_symmetric_pairs(slab, counter_above, counter_below)
 
     else:
 
@@ -149,31 +162,9 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
 
     slab_copy = slab.copy()
 
-    distances = {}
-
-    symmetric_atom_index_pairs = []
-
     if symmetric:
 
-        center_of_mass = slab.get_center_of_mass()
-
-        for dex in atom_index:
-
-            distances[dex] = [slab.position[0] - center_of_mass[0],
-                              slab.position[1] - center_of_mass[1],
-                              slab.position[2] - center_of_mass[2]]
-
-        for first_dex, first_distance in distances.values():
-
-            for second_dex, second_distance in distances.values():
-
-                if (isclose([first_distance[0]],[second_distance[0] * -1]) and
-                    isclose([first_distance[1]],[second_distance[1] * -1]) and
-                    isclose([first_distance[2]],[second_distance[2] * -1])):
-
-                    symmetric_atom_index_pairs.append([first_dex, second_dex])
-
-        for i,dex in enumerate(symmetric_atom_index_pairs):
+        pass
 
     else:
 

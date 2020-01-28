@@ -88,4 +88,4 @@ def test_transmuter_with_symmetric():
                                                                    [new_atom_1,new_atom_2])
 
     #view(transmuted_symmetric_slab)
-    assert print(transmute)
+    print(transmute)

@@ -3,9 +3,9 @@ module lets you keeps track of individual atoms between two similar ASE atoms ob
 """
 #!/usr/bin/env python
 from math import sqrt
+from numpy import isclose
 
-
-def pairs(slab, ads, difference_tol=0.3):
+def find_ads_slab_pairs(slab, ads, difference_tol=0.3):
     """
     Matches and pairs indices of atoms in `ads` with atoms in `slab` using atomic
     distances in unit cell.
@@ -98,3 +98,37 @@ def pairs(slab, ads, difference_tol=0.3):
         pair.append([s_loc[0], mult[0][0]])
 
     return pair
+
+def find_symmetric_pairs(slab, atom_index_set_1, atom_index_set_2):
+
+    center_of_mass = slab.get_center_of_mass()
+
+    distances_1 = {}
+
+    distances_2 = {}
+
+    symmetric_atom_index_pairs = []
+
+    for dex in atom_index_set_1:
+
+            distances_1[dex] = [slab[dex].position[0] - center_of_mass[0],
+                                slab[dex].position[1] - center_of_mass[1],
+                                slab[dex].position[2] - center_of_mass[2]]
+
+    for dex in atom_index_set_2:
+
+            distances_2[dex] = [slab[dex].position[0] - center_of_mass[0],
+                                slab[dex].position[1] - center_of_mass[1],
+                                slab[dex].position[2] - center_of_mass[2]]
+
+    for first_dex, first_distance in distances_1.items():
+
+            for second_dex, second_distance in distances_2.items():
+
+                if (isclose([first_distance[0]],[second_distance[0] * -1]) and
+                    isclose([first_distance[1]],[second_distance[1] * -1]) and
+                    isclose([first_distance[2]],[second_distance[2] * -1])):
+
+                    symmetric_atom_index_pairs.append([first_dex, second_dex])
+
+    return symmetric_atom_index_pairs
