@@ -100,6 +100,25 @@ def find_ads_slab_pairs(slab, ads, difference_tol=0.3):
     return pair
 
 def find_symmetric_pairs(slab, atom_index_set_1, atom_index_set_2):
+    """
+    Finds pairs of atoms in slab that are symmetric with each other about the center of mass. This
+    function returns pairs of indexes to the two atoms that are symmetric. Two lists must be supplied.
+    The first contains the indexes of the atoms above the symmetry plane. The second contains the 
+    indexes of the atoms below the symmetry plane.
+
+    Parameters
+    ----------
+    slab : An atoms object from ASE.
+
+    atom_index_set_1 : List of atom indexes in slab on one side of the plane of symmetry.
+
+    atom_index_set_2 : List of atom indexes in slab on the other side of the plane of symmetry.
+
+    Returns
+    -------
+    symmetric_atom_index_pairs : A list of lists. Each nested list contains a pair of indexes for
+    the two symmetric atoms.
+    """
 
     center_of_mass = slab.get_center_of_mass()
 
