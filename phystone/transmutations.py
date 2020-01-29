@@ -175,6 +175,29 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
     return slab_copy
 
 def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
+    """
+    Makes a label for a system created from `transmuter()`.
+
+    Parameters
+    ----------
+    bottom_index : Index of element in `counter` list (produced from `index_transmuted`) that
+        corresponds to the index of the atom counter transmuted.
+
+    top_index : Index of element in `transmute` list (produced from `index_transmuted`) that
+        corresponds to the index of the atom transmuted.
+
+    atom_index : List of atom indexes from `transmute` and `counter` that correspond to the
+        transmuted/counter transmuted atoms.
+
+    new_atoms : List of ASE Atom objects used to transmute. Should be the same length as `atom_index`.
+        `atom_index` and `new_atoms` should be defined in the same way they were defined for
+        `transmuter()`.
+
+    Returns
+    -------
+    label : String. Descripted label of the system created from `transmuter()`.
+
+    """
 
     label_tail = ''
 
