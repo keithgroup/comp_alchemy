@@ -15,15 +15,18 @@ def test_phystone_imported():
 from ase import Atom
 from ase.build import fcc111
 from ase.visualize import view
+from ase.geometry import get_layers
 
 slab = fcc111('Cu', size=(2, 2, 4), vacuum=10.0)
 #view(slab)
 
 symmetric_slab_odd = fcc111('Cu', size=(2, 2, 9), vacuum=10.0, orthogonal=True)
-view(symmetric_slab_odd)
+#view(symmetric_slab_odd)
+#print(get_layers(symmetric_slab_odd,(0,0,1)))
+
 symmetric_slab_even = fcc111('Cu', size=(2, 2, 8), vacuum=10.0, orthogonal=True)
 #view(symmetric_slab_even)
-print(symmetric_slab_even.get_center_of_mass())
+#print(symmetric_slab_even.get_center_of_mass())
 
 new_atom_1 = Atom('Zn')
 
@@ -55,12 +58,12 @@ def test_index_transmuted_with_symmetric():
     assert (expected_even_transmute == even_symmetric_transmute and
             expected_even_counter == even_symmetric_counter)
 
-    expected_odd_transmute = [32, 33, 34, 35, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7]
+    #expected_odd_transmute = [32, 33, 34, 35, 28, 29, 30, 31, 0, 1, 2, 3, 4, 5, 6, 7]
 
-    expected_odd_counter = [16, 17, 18, 19]
+    #expected_odd_counter = [16, 17, 18, 19]
 
-    odd_symmetric_transmute, odd_symmetric_counter = phystone.transmutations.index_transmuted(
-        symmetric_slab_odd,'Cu', 'Cu', 8, 4, symmetric=True)
+    #odd_symmetric_transmute, odd_symmetric_counter = phystone.transmutations.index_transmuted(
+    #    symmetric_slab_odd,'Cu', 'Cu', 8, 4, symmetric=True)
 
     #assert (expected_odd_transmute == odd_symmetric_transmute and
     #        expected_odd_counter == odd_symmetric_counter)
@@ -84,8 +87,14 @@ def test_transmuter_with_symmetric():
                                                                   'Cu', 8, 4, symmetric=True)
 
     transmuted_symmetric_slab = phystone.transmutations.transmuter(symmetric_slab_even,
-                                                                   [transmute[0],counter[0]],
-                                                                   [new_atom_1,new_atom_2])
+                                                                   transmute[0] + counter[0],
+                                                                   [new_atom_1] *2 + [new_atom_2] * 2)
 
-    #view(transmuted_symmetric_slab)
-    print(transmute)
+    assert ((transmuted_symmetric_slab[transmute[0][0]].number -
+             transmuted_symmetric_slab[transmute[1][0]].number) +
+             (transmuted_symmetric_slab[transmute[0][0]].number -
+              transmuted_symmetric_slab[transmute[1][0]].number) == 2 and
+            (transmuted_symmetric_slab[counter[1][0]].number -
+             transmuted_symmetric_slab[counter[0][0]].number) +
+             (transmuted_symmetric_slab[counter[1][0]].number -
+              transmuted_symmetric_slab[counter[0][0]].number) == 2)
