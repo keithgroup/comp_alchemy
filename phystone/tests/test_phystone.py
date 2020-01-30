@@ -12,21 +12,17 @@ def test_phystone_imported():
     assert "phystone" in sys.modules
 
 #Tests for transmutations.py
+
 from ase import Atom
 from ase.build import fcc111
 from ase.visualize import view
 from ase.geometry import get_layers
 
 slab = fcc111('Cu', size=(2, 2, 4), vacuum=10.0)
-#view(slab)
 
 symmetric_slab_odd = fcc111('Cu', size=(2, 2, 9), vacuum=10.0, orthogonal=True)
-#view(symmetric_slab_odd)
-#print(get_layers(symmetric_slab_odd,(0,0,1)))
 
 symmetric_slab_even = fcc111('Cu', size=(2, 2, 8), vacuum=10.0, orthogonal=True)
-#view(symmetric_slab_even)
-#print(symmetric_slab_even.get_center_of_mass())
 
 new_atom_1 = Atom('Zn')
 
@@ -98,3 +94,12 @@ def test_transmuter_with_symmetric():
              transmuted_symmetric_slab[counter[0][0]].number) +
              (transmuted_symmetric_slab[counter[1][0]].number -
               transmuted_symmetric_slab[counter[0][0]].number) == 2)
+
+#Tests for alchemy.py
+
+slab_dir = 'vasp_files/slab/'
+ads_dir = 'vasp_files/ads/'
+
+alc = phystone.alchemy.Alchemy(slab_dir, ads_dir)
+
+alc.get_esp()
