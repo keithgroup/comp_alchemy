@@ -2,7 +2,7 @@
 """
 #!/usr/bin/env python
 from numpy import isclose
-from .find_pairs import find_symmetric_pairs
+from find_pairs import find_symmetric_pairs
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
                      transmute_num, counter_num, symmetric=False):
@@ -157,10 +157,10 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
 
     Returns
     -------
-    slab_copy : An atoms object from ASE. This is an updated form of slab with all transmutations.
+    transmuted_slab : An atoms object from ASE. This is an updated form of slab with all transmutations.
     """
 
-    slab_copy = slab.copy()
+    transmuted_slab = slab.copy()
 
     if symmetric:
 
@@ -170,9 +170,9 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
 
         for i,dex in enumerate(atom_index):
 
-            slab_copy[dex].symbol = new_atoms[i].symbol
+            transmuted_slab[dex].symbol = new_atoms[i].symbol
 
-    return slab_copy
+    return transmuted_slab
 
 def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
     """
