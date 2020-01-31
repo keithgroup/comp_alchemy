@@ -58,7 +58,7 @@ def grab_esp(slab, outcar):
 
     return esp
 
-def espdiff(esp_1, esp_2, pairs):
+def esp_diff(esp_1, esp_2, pairs):
     """
     Calculating differences in electrostatic potential per atom between systems 1 and 2.
 
@@ -89,7 +89,7 @@ def espdiff(esp_1, esp_2, pairs):
 
     return diffs
 
-def remove_duplicate_espdiffs(dexlist, espdiffs, tol=0.01):
+def remove_duplicate_esp_diffs(dexlist, espdiffs, tol=0.01):
     """
     Filters and removes duplicate electrostatic potential differences from atoms
     supplied in dexlist.
