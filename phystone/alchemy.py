@@ -1,11 +1,13 @@
 """
 """
-from alchemical_derivative import *
+from alchemical_derivative import calc_alc_deriv
 from find_pairs import find_ads_slab_pairs
 from elec_stat_pot import grab_esp, esp_diff, heatmap
 from transmutations import index_transmuted, transmuter, transmuted_labels
 
 from ase.io import read
+
+import pandas as pd
 
 class Alchemy():
     """
@@ -46,7 +48,9 @@ class Alchemy():
         counter_atom = bottom_atom
         counter_atom.number -= delta_nuclear_charge
 
-        transmuted_dict = {}
+        alc_data = pd.DataFrame(columns=['label','delta nuclear charge','transmute indexes',
+                                         'transmute espdiff','counter indexes','counter espdiff',
+                                         'alchemical derivative','atoms object'])
 
         for bottom_index, counter_index in enumerate(counter_indexes):
 
@@ -59,11 +63,20 @@ class Alchemy():
                                                      [transmute_index, counter_index],
                                                      [transmute_atom, counter_atom])
 
-                transmuted_dict[transmuted_label] = transmuted_slab
+                alc_derivative = calc_alc_deriv([transmute_index], [counter_index], self.esp_diff,
+                                                delta_nuclear_charge)
 
-        return transmuted_dict
+                alc_data = alc_data.append({'label' : transmuted_label,
+                                            'delta nuclear charge' : delta_nuclear_charge,
+                                            'transmute indexes' : transmute_index,
+                                            'transmute espdiff' : self.esp_diff[transmute_index],
+                                            'counter indexes' : counter_index,
+                                            'counter espdiff' : self.esp_diff[counter_index],
+                                            'alchemical derivative' : alc_derivative[1],
+                                            'atoms object' : transmuted_slab},
+                                            ignore_index=True)
 
-
+        return alc_data
 
 slab_dir = 'tests/vasp_files/slab/'
 ads_dir = 'tests/vasp_files/ads/'
@@ -71,8 +84,12 @@ ads_dir = 'tests/vasp_files/ads/'
 alc = Alchemy(slab_dir, ads_dir)
 
 from ase import Atom
-
-print(alc.do_alchemy(1, Atom('Pt'), Atom('Pt'), 8, 1))
-
 from ase.visualize import view
+
+p1 = alc.do_alchemy(1, Atom('Pt'), Atom('Pt'), 8, 1)
+
+p2 = alc.do_alchemy(-1, Atom('Pt'), Atom('Pt'), 8, 1)
+
+#view(p1['atoms object'][0])
+
 #view(heatmap(alc.slab, alc.esp_diff))
