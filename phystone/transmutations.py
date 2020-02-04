@@ -201,7 +201,7 @@ def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
 
     label_tail = ''
 
-    for i in enumerate(atom_index):
+    for i, dex in enumerate(atom_index):
 
         label_tail = label_tail + '.' + new_atoms[i].symbol + str(atom_index[i])
 
