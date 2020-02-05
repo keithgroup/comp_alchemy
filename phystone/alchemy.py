@@ -7,6 +7,8 @@ from transmutations import index_transmuted, transmuter, transmuted_labels
 
 from ase.io import read
 
+from itertools import combinations
+
 import pandas as pd
 
 class Alchemy():
@@ -30,8 +32,8 @@ class Alchemy():
                                  find_ads_slab_pairs(self.slab,
                                                      self.ads))
 
-    def do_alchemy(self, delta_nuclear_charge, top_atom, bottom_atom,
-                   transmute_num, counter_num, symmetric=False):
+    def do_alchemy(self, delta_nuclear_charge, number_of_transmutations, top_atom,
+                   bottom_atom, transmute_num, counter_num, symmetric=False):
         """
         """
         (transmute_indexes,
@@ -42,53 +44,73 @@ class Alchemy():
         self.transmute_indexes = transmute_indexes
         self.counter_indexes = counter_indexes
 
+        transmute_combinations = list(combinations(transmute_indexes, number_of_transmutations))
+        counter_combinations = list(combinations(counter_indexes, number_of_transmutations))
+
         transmute_atom = top_atom
         transmute_atom.number += delta_nuclear_charge
+        transmute_atom = [transmute_atom] * number_of_transmutations
 
         counter_atom = bottom_atom
         counter_atom.number -= delta_nuclear_charge
+        counter_atom = [counter_atom] * number_of_transmutations
+
+        all_atom = transmute_atom + counter_atom
 
         alc_data = pd.DataFrame(columns=['label','delta nuclear charge','transmute indexes',
                                          'transmute espdiff','counter indexes','counter espdiff',
                                          'alchemical derivative','atoms object'])
 
-        for bottom_index, counter_index in enumerate(counter_indexes):
+        for bottom_index, counter_index in enumerate(counter_combinations):
 
-            for top_index, transmute_index in enumerate(transmute_indexes):
+            counter_index = list(counter_index)
 
-                transmuted_slab = transmuter(self.slab, [transmute_index, counter_index],
-                                             [transmute_atom, counter_atom],symmetric)
+            for top_index, transmute_index in enumerate(transmute_combinations):
 
-                transmuted_label = transmuted_labels(bottom_index, top_index,
-                                                     [transmute_index, counter_index],
-                                                     [transmute_atom, counter_atom])
+                transmute_index = list(transmute_index)
 
-                alc_derivative = calc_alc_deriv([transmute_index], [counter_index], self.esp_diff,
-                                                delta_nuclear_charge)
+                all_index = transmute_index + counter_index
+
+                transmuted_slab = transmuter(self.slab, all_index, all_atom, symmetric)
+
+                transmuted_label = transmuted_labels(bottom_index, top_index, all_index, all_atom)
+
+                alc_derivative = calc_alc_deriv(transmute_index, counter_index,
+                                                self.esp_diff, delta_nuclear_charge)
 
                 alc_data = alc_data.append({'label' : transmuted_label,
                                             'delta nuclear charge' : delta_nuclear_charge,
                                             'transmute indexes' : transmute_index,
-                                            'transmute espdiff' : self.esp_diff[transmute_index],
+                                            'transmute espdiff' :
+                                            [self.esp_diff[t] for t in transmute_index],
                                             'counter indexes' : counter_index,
-                                            'counter espdiff' : self.esp_diff[counter_index],
+                                            'counter espdiff' :
+                                            [self.esp_diff[c] for c in counter_index],
                                             'alchemical derivative' : alc_derivative[1],
                                             'atoms object' : transmuted_slab},
                                             ignore_index=True)
 
         return alc_data
 
+from ase import Atom
+from ase.visualize import view
+
 slab_dir = 'tests/vasp_files/slab/'
 ads_dir = 'tests/vasp_files/ads/'
 
 alc = Alchemy(slab_dir, ads_dir)
 
-from ase import Atom
-from ase.visualize import view
+p1 = alc.do_alchemy(1, 2, Atom('Pt'), Atom('Pt'), 4, 4)
 
-p1 = alc.do_alchemy(1, Atom('Pt'), Atom('Pt'), 8, 1)
+print(p1)
 
-p2 = alc.do_alchemy(-1, Atom('Pt'), Atom('Pt'), 8, 1)
+p2 = alc.do_alchemy(-1, 1, Atom('Pt'), Atom('Pt'), 8, 1)
+
+combos = list(combinations(alc.transmute_indexes, 2))
+
+print(combos)
+
+print(list(combos[0] + combos[1]))
 
 #view(p1['atoms object'][0])
 
