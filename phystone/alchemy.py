@@ -57,21 +57,32 @@ class Alchemy():
 
         all_atom = transmute_atom + counter_atom
 
+        pairs = find_ads_slab_pairs(self.slab, self.ads)
+
         alc_data = pd.DataFrame(columns=['label','delta nuclear charge','transmute indexes',
                                          'transmute espdiff','counter indexes','counter espdiff',
-                                         'alchemical derivative','atoms object'])
+                                         'alchemical derivative','slab atoms object',
+                                         'ads atoms object'])
 
         for bottom_index, counter_index in enumerate(counter_combinations):
 
             counter_index = list(counter_index)
 
+            ads_counter_index = [pairs[slab_index][1] for slab_index in counter_index]
+
             for top_index, transmute_index in enumerate(transmute_combinations):
 
                 transmute_index = list(transmute_index)
 
+                ads_transmute_index = [pairs[slab_index][1] for slab_index in transmute_index]
+
                 all_index = transmute_index + counter_index
 
+                ads_all_index = ads_transmute_index + ads_counter_index
+
                 transmuted_slab = transmuter(self.slab, all_index, all_atom, symmetric)
+
+                transmuted_ads = transmuter(self.ads, ads_all_index, all_atom, symmetric)
 
                 transmuted_label = transmuted_labels(bottom_index, top_index, all_index, all_atom)
 
@@ -87,7 +98,8 @@ class Alchemy():
                                             'counter espdiff' :
                                             [self.esp_diff[c] for c in counter_index],
                                             'alchemical derivative' : alc_derivative[1],
-                                            'atoms object' : transmuted_slab},
+                                            'slab atoms object' : transmuted_slab,
+                                            'ads atoms object' : transmuted_ads},
                                             ignore_index=True)
 
         return alc_data
@@ -108,10 +120,8 @@ p2 = alc.do_alchemy(-1, 1, Atom('Pt'), Atom('Pt'), 8, 1)
 
 combos = list(combinations(alc.transmute_indexes, 2))
 
-print(combos)
+view(p1['slab atoms object'][0])
 
-print(list(combos[0] + combos[1]))
-
-#view(p1['atoms object'][0])
+view(p1['ads atoms object'][0])
 
 #view(heatmap(alc.slab, alc.esp_diff))
