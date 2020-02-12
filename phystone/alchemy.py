@@ -103,25 +103,3 @@ class Alchemy():
                                             ignore_index=True)
 
         return alc_data
-
-from ase import Atom
-from ase.visualize import view
-
-slab_dir = 'tests/vasp_files/slab/'
-ads_dir = 'tests/vasp_files/ads/'
-
-alc = Alchemy(slab_dir, ads_dir)
-
-p1 = alc.do_alchemy(1, 2, Atom('Pt'), Atom('Pt'), 4, 4)
-
-print(p1)
-
-p2 = alc.do_alchemy(-1, 1, Atom('Pt'), Atom('Pt'), 8, 1)
-
-combos = list(combinations(alc.transmute_indexes, 2))
-
-view(p1['slab atoms object'][0])
-
-view(p1['ads atoms object'][0])
-
-#view(heatmap(alc.slab, alc.esp_diff))
