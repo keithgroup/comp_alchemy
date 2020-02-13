@@ -37,3 +37,41 @@ def read_vasp_energies(Alchemy, alc_data):
 
         calc = Vasp2(directory=transmute_ads_dir)
         calc.read_energy()
+
+def make_job_script(wdir,name,jobnum,nodes,cores,cluster,partition,hours):
+
+    with open(f'{wdir}/job_sub.slurm','w') as js:
+
+        js.write(f'''#!/bin/bash
+#SBATCH --job-name="{name}-{jobnum}"
+#SBATCH --nodes={nodes}
+#SBATCH --ntasks={cores}
+#SBATCH --cluster={cluster}
+#SBATCH --partition={partition}
+#SBATCH --error=VASP-%j.err
+#SBATCH --mail-type=FAIL
+#SBATCH --mail-user=cdg36@pitt.edu
+#SBATCH --time={hours}:00:00
+set -v
+ulimit -s unlimited
+
+module purge
+module load intel/2017.1.132
+module load intel-mpi/2017.1.132
+module load mkl
+module load fftw
+module load vasp/5.4.4
+
+# BEFORE running section
+echo "JOB_ID: $SLURM_JOB_ID JOB_NAME: $SLURM_JOB_NAME" >> runstats.out
+before=$(date +%s)
+echo "The JOB started on : $(date)" >> runstats.out
+
+# RUN section
+srun --mpi=pmi2 vasp_std  >& stdout.prod
+
+# AFTER running section
+after=$(date +%s)
+elapsed_seconds=$(expr $after - $before)
+echo "The JOB ended on: $(date)" >> runstats.out
+echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
