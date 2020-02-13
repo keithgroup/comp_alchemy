@@ -1,9 +1,9 @@
 """
 """
-from alchemical_derivative import calc_alc_deriv
-from find_pairs import find_ads_slab_pairs
-from elec_stat_pot import grab_esp, esp_diff, heatmap
-from transmutations import index_transmuted, transmuter, transmuted_labels
+from .alchemical_derivative import calc_alc_deriv
+from .find_pairs import find_ads_slab_pairs
+from .elec_stat_pot import grab_esp, esp_diff, heatmap
+from .transmutations import index_transmuted, transmuter, transmuted_labels
 
 from ase.io import read
 

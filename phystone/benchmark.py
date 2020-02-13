@@ -1,4 +1,4 @@
-from alchemy import Alchemy
+from .alchemy import Alchemy
 import os
 from ase.calculators.vasp.vasp2 import Vasp2
 
