@@ -9,6 +9,7 @@ from .alchemical_derivative import *
 from .find_pairs import *
 from .elec_stat_pot import *
 from .transmutations import *
+from .benchmark import *
 
 # Handle versioneer
 from ._version import get_versions
