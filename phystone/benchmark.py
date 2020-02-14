@@ -58,6 +58,7 @@ def write_job_script(wdir, name, jobnum, nodes, cores, cluster, partition, hours
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=cdg36@pitt.edu
 #SBATCH --time={hours}:00:00
+
 set -v
 ulimit -s unlimited
 
@@ -83,8 +84,16 @@ echo "The JOB ended on: $(date)" >> runstats.out
 echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
 
 #TEST
-from alchemy import Alchemy
+#from phystone.alchemy import Alchemy
 
-h = Alchemy('tests/vasp_files/slab/','tests/vasp_files/ads/')
+#h = Alchemy('tests/vasp_files/slab/','tests/vasp_files/ads/')
 
-alc = h.do_alchemy(1,1,'Pt','Pt',1,1)
+#alc = h.do_alchemy(1,1,'Pt','Pt',1,1)
+
+#from ase.visualize import view
+
+#view(alc['slab atoms object'][0])
+
+#from phystone.benchmark import setup_vasp_calcs
+
+#setup_vasp_calcs(h, alc)
