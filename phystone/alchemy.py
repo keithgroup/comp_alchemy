@@ -1,10 +1,11 @@
 """
 """
-from .alchemical_derivative import calc_alc_deriv
-from .find_pairs import find_ads_slab_pairs
-from .elec_stat_pot import grab_esp, esp_diff, heatmap
-from .transmutations import index_transmuted, transmuter, transmuted_labels
+from phystone.alchemical_derivative import calc_alc_deriv
+from phystone.find_pairs import find_ads_slab_pairs
+from phystone.elec_stat_pot import grab_esp, esp_diff, heatmap
+from phystone.transmutations import index_transmuted, transmuter, transmuted_labels
 
+from ase import Atom
 from ase.io import read
 
 from itertools import combinations
@@ -40,8 +41,8 @@ class Alchemy():
         """
         """
         (transmute_indexes,
-         counter_indexes) = index_transmuted(self.slab, top_atom.symbol,
-                                                  bottom_atom.symbol, transmute_num,counter_num,
+         counter_indexes) = index_transmuted(self.slab, top_atom,
+                                                  bottom_atom, transmute_num,counter_num,
                                                   symmetric)
 
         self.transmute_indexes = transmute_indexes
@@ -49,6 +50,9 @@ class Alchemy():
 
         transmute_combinations = list(combinations(transmute_indexes, number_of_transmutations))
         counter_combinations = list(combinations(counter_indexes, number_of_transmutations))
+
+        top_atom = Atom(symbol=top_atom)
+        bottom_atom = Atom(symbol=bottom_atom)
 
         transmute_atom = top_atom
         transmute_atom.number += delta_nuclear_charge
@@ -108,7 +112,14 @@ class Alchemy():
         return alc_data
 
 #TEST
-slab_dir = 'test/vasp_files/slab/'
-ads_dir = 'test/vasp_files/ads/'
 
-print(Alchemy(slab_dir, ads_dir))
+#from ase.visualize import view
+
+#slab_dir = 'tests/vasp_files/slab/'
+#ads_dir = 'tests/vasp_files/ads/'
+
+#system = Alchemy(slab_dir, ads_dir)
+
+#alc_data = system.do_alchemy(1,1,'Pt','Pt',1,1)
+#print(alc_data['label'][0])
+#view(alc_data['slab atoms object'][0])

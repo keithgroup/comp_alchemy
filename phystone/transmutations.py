@@ -3,7 +3,7 @@
 #!/usr/bin/env python
 from numpy import isclose
 from ase import Atom
-from .find_pairs import find_symmetric_pairs
+from phystone.find_pairs import find_symmetric_pairs
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
                      transmute_num, counter_num, symmetric=False):
