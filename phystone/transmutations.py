@@ -2,6 +2,7 @@
 """
 #!/usr/bin/env python
 from numpy import isclose
+from ase import Atom
 from .find_pairs import find_symmetric_pairs
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
@@ -150,7 +151,7 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
     atom_index : List of indexes of atoms to be transmuted/counter-transmuted
         (see index_transmuted()).
 
-    new_atoms : List of ASE atom objects. New atoms that atoms in slab will be transmuted into.
+    new_atoms : List of strings of atom symbols. New atoms that atoms in slab will be transmuted into.
         This list must be equal length to `atom_index.`
 
     symmetric (default: False): Boolean. Indicates if using a symmetric slab.
@@ -159,6 +160,8 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
     -------
     transmuted_slab : An atoms object from ASE. This is an updated form of slab with all transmutations.
     """
+
+    new_atoms = [Atom(symbol=item) for item in new_atoms]
 
     transmuted_slab = slab.copy()
 
