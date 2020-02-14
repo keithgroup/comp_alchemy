@@ -56,11 +56,11 @@ class Alchemy():
 
         transmute_atom = top_atom
         transmute_atom.number += delta_nuclear_charge
-        transmute_atom = [transmute_atom] * number_of_transmutations
+        transmute_atom = [transmute_atom.symbol] * number_of_transmutations
 
         counter_atom = bottom_atom
         counter_atom.number -= delta_nuclear_charge
-        counter_atom = [counter_atom] * number_of_transmutations
+        counter_atom = [counter_atom.symbol] * number_of_transmutations
 
         all_atom = transmute_atom + counter_atom
 

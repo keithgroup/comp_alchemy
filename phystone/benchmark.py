@@ -81,3 +81,10 @@ after=$(date +%s)
 elapsed_seconds=$(expr $after - $before)
 echo "The JOB ended on: $(date)" >> runstats.out
 echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
+
+#TEST
+from alchemy import Alchemy
+
+h = Alchemy('tests/vasp_files/slab/','tests/vasp_files/ads/')
+
+alc = h.do_alchemy(1,1,'Pt','Pt',1,1)

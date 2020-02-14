@@ -2,7 +2,6 @@
 """
 #!/usr/bin/env python
 from numpy import isclose
-from ase import Atom
 from phystone.find_pairs import find_symmetric_pairs
 
 def index_transmuted(slab, transmute_atom_sym, counter_atom_sym,
@@ -161,8 +160,6 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
     transmuted_slab : An atoms object from ASE. This is an updated form of slab with all transmutations.
     """
 
-    new_atoms = [Atom(symbol=item) for item in new_atoms]
-
     transmuted_slab = slab.copy()
 
     if symmetric:
@@ -173,7 +170,7 @@ def transmuter(slab, atom_index, new_atoms, symmetric=False):
 
         for i,dex in enumerate(atom_index):
 
-            transmuted_slab[dex].symbol = new_atoms[i].symbol
+            transmuted_slab[dex].symbol = new_atoms[i]
 
     return transmuted_slab
 
@@ -192,7 +189,7 @@ def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
     atom_index : List of atom indexes from `transmute` and `counter` that correspond to the
         transmuted/counter transmuted atoms.
 
-    new_atoms : List of ASE Atom objects used to transmute. Should be the same length as `atom_index`.
+    new_atoms : List of symbols of atoms used to transmute. Should be the same length as `atom_index`.
         `atom_index` and `new_atoms` should be defined in the same way they were defined for
         `transmuter()`.
 
@@ -206,7 +203,7 @@ def transmuted_labels(bottom_index, top_index, atom_index, new_atoms):
 
     for i, dex in enumerate(atom_index):
 
-        label_tail = label_tail + '.' + new_atoms[i].symbol + str(atom_index[i])
+        label_tail = label_tail + '.' + new_atoms[i] + str(atom_index[i])
 
     label = str(bottom_index) + '.' + str(top_index) + label_tail
 
