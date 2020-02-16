@@ -17,14 +17,14 @@ def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
                                                f"{row['label']}/")
 
         calc = Vasp2(directory=transmute_slab_dir, **kwargs)
-        calc.write_input(row['slab atoms object'])
         write_job_script(transmute_slab_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
+        calc.calculate(row['slab atoms object'])
 
         calc = Vasp2(directory=transmute_ads_dir, **kwargs)
-        calc.write_input(row['ads atoms object'])
         write_job_script(transmute_ads_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
+        calc.calculate(row['ads atoms object'])
 
 def read_vasp_energies(Alchemy, alc_data):
 
