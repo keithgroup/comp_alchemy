@@ -20,13 +20,13 @@ def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
         calc.write_input(row['slab atoms object'])
         write_job_script(transmute_slab_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
-        calc._run(command='sbatch job_sub.slurm')
+        calc._run(command=f'sbatch {transmute_slab_dir}job_sub.slurm')
 
         calc = Vasp2(directory=transmute_ads_dir, **kwargs)
         calc.write_input(row['ads atoms object'])
         write_job_script(transmute_ads_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
-        calc._run(command='sbatch job_sub.slurm')
+        calc._run(command=f'sbatch {transmute_ads_dir}job_sub.slurm')
 
 def read_vasp_energies(Alchemy, alc_data):
 
