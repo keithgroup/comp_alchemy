@@ -8,11 +8,11 @@ def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
 
     for index, row in alc_data.iterrows():
 
-        transmute_slab_dir = Alchemy.slab_dir + (f"{row['delta nuclear charge']}_deltaZ_" +
+        transmute_slab_dir = Alchemy.slab_dir + (f"{abs(int(row['delta nuclear charge']))}_deltaZ_" +
                                                  f"{len(row['transmute indexes'])}_Nt/" +
                                                  f"{row['label']}/")
 
-        transmute_ads_dir = Alchemy.ads_dir + (f"{row['delta nuclear charge']}_deltaZ_" +
+        transmute_ads_dir = Alchemy.ads_dir + (f"{abs(int(row['delta nuclear charge']))}_deltaZ_" +
                                                f"{len(row['transmute indexes'])}_Nt/" +
                                                f"{row['label']}/")
 
