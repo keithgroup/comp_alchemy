@@ -20,13 +20,11 @@ def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
         calc.write_input(row['slab atoms object'])
         write_job_script(transmute_slab_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
-        calc._run(command=f'sbatch {transmute_slab_dir}job_sub.slurm')
 
         calc = Vasp2(directory=transmute_ads_dir, **kwargs)
         calc.write_input(row['ads atoms object'])
         write_job_script(transmute_ads_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
-        calc._run(command=f'sbatch {transmute_ads_dir}job_sub.slurm')
 
 def read_vasp_energies(Alchemy, alc_data):
 
@@ -84,6 +82,28 @@ after=$(date +%s)
 elapsed_seconds=$(expr $after - $before)
 echo "The JOB ended on: $(date)" >> runstats.out
 echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
+
+def submit_vasp_calcs(Alchemy, alc_data,):
+
+    home = os.getcwd()
+
+    for index, row in alc_data.iterrows():
+
+        transmute_slab_dir = Alchemy.slab_dir + (f"{abs(int(row['delta nuclear charge']))}_deltaZ_" +
+                                                 f"{len(row['transmute indexes'])}_Nt/" +
+                                                 f"{row['label']}/")
+
+        transmute_ads_dir = Alchemy.ads_dir + (f"{abs(int(row['delta nuclear charge']))}_deltaZ_" +
+                                               f"{len(row['transmute indexes'])}_Nt/" +
+                                               f"{row['label']}/")
+
+        os.chdir(transmute_slab_dir)
+        os.system('sbatch job_sub.slurm')
+        os.chdir(home)
+
+        os.chdir(transmute_ads_dir)
+        os.system('sbatch job_sub.slurm')
+        os.chdir(home)
 
 #TEST
 #from phystone.alchemy import Alchemy
