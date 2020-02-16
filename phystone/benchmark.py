@@ -83,7 +83,7 @@ elapsed_seconds=$(expr $after - $before)
 echo "The JOB ended on: $(date)" >> runstats.out
 echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
 
-def submit_vasp_calcs(Alchemy, alc_data,):
+def submit_vasp_calcs(Alchemy, alc_data):
 
     home = os.getcwd()
 
