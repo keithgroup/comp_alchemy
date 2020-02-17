@@ -39,7 +39,7 @@ def read_vasp_energies(Alchemy, alc_data):
                                                f"{row['label']}/")
 
         calc = Vasp2(directory=transmute_slab_dir)
-        calc.read_energy()
+        print(calc.read_energy())
 
         calc = Vasp2(directory=transmute_ads_dir)
         print(calc.read_energy())
