@@ -28,6 +28,16 @@ def setup_vasp_calcs(Alchemy, alc_data, slab=True, nodes=1, cores=24, cluster='s
                          hours)
 
 def read_vasp_energies(Alchemy, alc_data):
+    
+    slab_calc = Vasp2(directory=Alchemy.slab_dir)
+    slab_energy = slab_calc.read_energy()[1]
+    
+    ads_calc = Vasp2(directory=Alchemy.ads_dir)
+    ads_energy = ads_calc.read_energy()[1]
+    
+    deltaE_dft = []
+    
+    errors = []
 
     for index, row in alc_data.iterrows():
 
@@ -40,12 +50,23 @@ def read_vasp_energies(Alchemy, alc_data):
                                                f"{row['label']}/")
 
         calc = Vasp2(directory=transmute_slab_dir)
-        print(calc.read_convergence())
-        print(calc.read_energy())
+        print(row['label'],calc.read_convergence())
+        transmuted_slab_energy = calc.read_energy()[1]
 
         calc = Vasp2(directory=transmute_ads_dir)
-        print(calc.read_convergence())
-        print(calc.read_energy())
+        print(row['label'],calc.read_convergence())
+        transmuted_ads_energy = calc.read_energy()[1]
+                                               
+        deltaE = (transmuted_slab_energy - transmuted_ads_energy) - (slab_energy - ads_energy)
+                                               
+        deltaE_dft.append(deltaE)
+                                               
+        errors.append(abs(row['alchemical derivative'] - deltaE))
+                                               
+    alc_data['deltaE DFT'] = deltaE_dft
+    alc_data['absolute errors'] = errors
+
+    return alc_data
 
 def write_job_script(wdir, name, jobnum, nodes, cores, cluster, partition, hours):
 
