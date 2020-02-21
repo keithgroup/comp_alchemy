@@ -40,9 +40,11 @@ def read_vasp_energies(Alchemy, alc_data):
                                                f"{row['label']}/")
 
         calc = Vasp2(directory=transmute_slab_dir)
+        print(calc.read_convergence())
         print(calc.read_energy())
 
         calc = Vasp2(directory=transmute_ads_dir)
+        print(calc.read_convergence())
         print(calc.read_energy())
 
 def write_job_script(wdir, name, jobnum, nodes, cores, cluster, partition, hours):
