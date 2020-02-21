@@ -84,7 +84,7 @@ elapsed_seconds=$(expr $after - $before)
 echo "The JOB ended on: $(date)" >> runstats.out
 echo "The JOB ran for: $elapsed_seconds seconds" >> runstats.out''')
 
-def submit_vasp_calcs(Alchemy, alc_data):
+def submit_vasp_calcs(Alchemy, alc_data, slab=True):
 
     home = os.getcwd()
 
@@ -98,9 +98,10 @@ def submit_vasp_calcs(Alchemy, alc_data):
                                                f"{len(row['transmute indexes'])}_Nt/" +
                                                f"{row['label']}/")
 
-        os.chdir(transmute_slab_dir)
-        os.system('sbatch job_sub.slurm')
-        os.chdir(home)
+        if slab:
+            os.chdir(transmute_slab_dir)
+            os.system('sbatch job_sub.slurm')
+            os.chdir(home)
 
         os.chdir(transmute_ads_dir)
         os.system('sbatch job_sub.slurm')
