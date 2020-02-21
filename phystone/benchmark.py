@@ -3,7 +3,7 @@
 import os
 from ase.calculators.vasp.vasp2 import Vasp2
 
-def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
+def setup_vasp_calcs(Alchemy, alc_data, slab=True, nodes=1, cores=24, cluster='smp',
                      partition='smp', hours=6, **kwargs):
 
     for index, row in alc_data.iterrows():
@@ -16,9 +16,10 @@ def setup_vasp_calcs(Alchemy, alc_data, nodes=1, cores=24, cluster='smp',
                                                f"{len(row['transmute indexes'])}_Nt/" +
                                                f"{row['label']}/")
 
-        calc = Vasp2(directory=transmute_slab_dir, **kwargs)
-        calc.write_input(row['slab atoms object'])
-        write_job_script(transmute_slab_dir, row['label'], index, nodes, cores, cluster, partition,
+        if slab:
+            calc = Vasp2(directory=transmute_slab_dir, **kwargs)
+            calc.write_input(row['slab atoms object'])
+            write_job_script(transmute_slab_dir, row['label'], index, nodes, cores, cluster, partition,
                          hours)
 
         calc = Vasp2(directory=transmute_ads_dir, **kwargs)
