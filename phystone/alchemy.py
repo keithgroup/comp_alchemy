@@ -96,32 +96,14 @@ class Alchemy():
                 alc_derivative = calc_alc_deriv(transmute_index, counter_index,
                                                 self.esp_diff, delta_nuclear_charge)
 
-                transmute_index_string = ''
-                transmute_espdiff = ''
-                counter_index_string = ''
-                counter_espdiff = ''
-
-                for t in transmute_index:
-
-                    transmute_index_string += str(t) + ':'
-                    transmute_espdiff += str(self.esp_diff[t]) + ':'
-
-                for c in counter_index:
-
-                    counter_index_string += str(c) + ':'
-                    counter_espdiff += str(self.esp_diff[c]) + ':'
-
-                transmute_index_string = transmute_index_string[:-1]
-                transmute_espdiff = transmute_espdiff[:-1]
-                counter_index_string = counter_index_string[:-1]
-                counter_espdiff = counter_espdiff[:-1]
-
                 alc_data = alc_data.append({'label' : transmuted_label,
                                             'delta nuclear charge' : delta_nuclear_charge,
-                                            'transmute indexes' : transmute_index_string,
-                                            'transmute espdiff' : transmute_espdiff,
-                                            'counter indexes' : counter_index_string,
-                                            'counter espdiff' : counter_espdiff,
+                                            'transmute indexes' : transmute_index,
+                                            'transmute espdiff' :
+                                            [self.esp_diff[t] for t in transmute_index],
+                                            'counter indexes' : counter_index,
+                                            'counter espdiff' :
+                                            [self.esp_diff[c] for c in counter_index],
                                             'alchemical derivative' : alc_derivative[1],
                                             'slab atoms object' : transmuted_slab,
                                             'ads atoms object' : transmuted_ads},
