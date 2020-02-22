@@ -50,11 +50,11 @@ def read_vasp_energies(Alchemy, alc_data):
                                                f"{row['label']}/")
 
         calc = Vasp2(directory=transmute_slab_dir)
-        print('slab',row['label'],calc.read_convergence())
+        print(row['label'],'slab',calc.read_convergence())
         transmuted_slab_energy = calc.read_energy()[1]
 
         calc = Vasp2(directory=transmute_ads_dir)
-        print('ads',row['label'],calc.read_convergence())
+        print(row['label'],'ads',calc.read_convergence())
         transmuted_ads_energy = calc.read_energy()[1]
                                                
         deltaE = (transmuted_slab_energy - transmuted_ads_energy) - (slab_energy - ads_energy)
