@@ -12,4 +12,4 @@ dependencies:
   - ipywidgets
   - scikit-learn
   - pip:
-    - git+https://github.com/chaszg/phystone#egg=comp_alchemy
+    - pip install git+https://github.com/KeithLabPitt/comp_alchemy.git
