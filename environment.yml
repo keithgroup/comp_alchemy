@@ -1,0 +1,15 @@
+name: comp_alchemy_notebook
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - numpy
+  - pandas
+  - pip
+  - ase
+  - bokeh
+  - nglview
+  - ipywidgets
+  - scikit-learn
+  - pip:
+    - git+https://github.com/chaszg/phystone#egg=comp_alchemy
