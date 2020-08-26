@@ -1,4 +1,4 @@
-﻿Machine Corrections to APDFT
+﻿Machine Learning Corrections to APDFT
 ==============================
 CSV data files, atomic structure JSON files, and a Jupyter notebook tutorial for the analysis done in the following paper: 
 
