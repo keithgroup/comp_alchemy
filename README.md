@@ -21,9 +21,13 @@ Interact with example notebooks:
 ### References
 <ol>
 <li>Charles. D. Griego, Lingyan. Zhao, Karthikeyan. Saravanan, John. A. Keith, Machine Learning Models Correct Systematic Errors in Alchemical Perturbation Density Functional Theory Applications to Catalysis. ChemRxiv. 2020. 
-DOI: https://doi.org/10.26434/chemrxiv.12251462.v1</li>
+DOI: https://doi.org/10.26434/chemrxiv.12251462.v1
+
+Data available: https://github.com/keithgroup/comp_alchemy/tree/master/example-notebooks/Machine-learning-corrections</li>
 <li>Charles D. Griego, John R. Kitchin, John A. Keith. Acceleration of Catalyst Discovery with Easy, Fast, and Reproducible Computational Alchemy. International Journal of Quantum Chemistry, 2020. 
-DOI: https://doi.org/10.1002/qua.26380</li>
+DOI: https://doi.org/10.1002/qua.26380
+
+Data available: https://github.com/chaszg/phystone/tree/master/example-notebooks</li>
 <li>Charles D. Griego, Karthikeyan Saravanan, John A. Keith. Benchmarking Computational Alchemy for Carbide Nitride, and Oxide Catalysts. Advanced Theory and Simulations 2, 1800142 Wiley, 2018. 
 DOI: https://doi.org/10.1002/adts.201800142</li>
 <li>Karthikeyan Saravanan, John R. Kitchin, O. Anatole von Lilienfeld, John A. Keith. Alchemical Predictions for Computational Catalysis: Potential and Limitations. The Journal of Physical Chemistry Letters 8, 5002–5007 American Chemical Society (ACS), 2017. 
