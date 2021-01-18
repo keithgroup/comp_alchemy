@@ -31,11 +31,6 @@ class Alchemy():
         self.slab_esp = grab_esp(self.slab, f'{self.slab_dir}OUTCAR')
         self.ads_esp = grab_esp(self.ads, f'{self.ads_dir}OUTCAR')
 
-        self.esp_diff = esp_diff(self.slab_esp,
-                                 self.ads_esp,
-                                 find_ads_slab_pairs(self.slab,
-                                                     self.ads))
-
     def do_alchemy(self, delta_nuclear_charge, number_of_transmutations, top_atom,
                    bottom_atom, transmute_num, counter_num, symmetric=False,
                    bypass_find_pairs=False):
@@ -72,6 +67,10 @@ class Alchemy():
         else:
 
             pairs = find_ads_slab_pairs(self.slab, self.slab)
+
+        self.esp_diff = esp_diff(self.slab_esp,
+                                 self.ads_esp,
+                                 pairs)
 
         alc_data = pd.DataFrame(columns=['label','delta nuclear charge','transmute indexes',
                                          'transmute espdiff','counter indexes','counter espdiff',
