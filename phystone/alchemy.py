@@ -37,7 +37,8 @@ class Alchemy():
                                                      self.ads))
 
     def do_alchemy(self, delta_nuclear_charge, number_of_transmutations, top_atom,
-                   bottom_atom, transmute_num, counter_num, symmetric=False):
+                   bottom_atom, transmute_num, counter_num, symmetric=False,
+                   bypass_find_pairs=False):
         """
         """
         (transmute_indexes,
@@ -64,7 +65,13 @@ class Alchemy():
 
         all_atom = transmute_atom + counter_atom
 
-        pairs = find_ads_slab_pairs(self.slab, self.ads)
+        if not bypass_find_pairs:
+
+            pairs = find_ads_slab_pairs(self.slab, self.ads)
+
+        else:
+
+            pairs = find_ads_slab_pairs(self.slab, self.slab)
 
         alc_data = pd.DataFrame(columns=['label','delta nuclear charge','transmute indexes',
                                          'transmute espdiff','counter indexes','counter espdiff',
